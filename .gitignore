@@ -237,5 +237,6 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+.git_local_repo_credentials
 
 # End of https://www.toptal.com/developers/gitignore/api/node,visualstudiocode,macos,windows,linux,serverless
