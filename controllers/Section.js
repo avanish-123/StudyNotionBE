@@ -78,3 +78,38 @@ exports.updateSection = async(req,res)=>{
         
     }
 }
+
+//delete section
+exports.deleteSection = async(req,res)=>{
+    try {
+        const {sectionId} = req.body;
+        if(!sectionId){
+            return res.status(400).json({
+                success: false,
+                message:"Please enter id of the section"
+            })
+        }
+        //check if section present or not with given section id
+        const checkSection = await Section.findById(sectionId)
+        if(!checkSection){
+            return res.status(400).json({
+                success: false,
+                message: "No section associated with this section id"
+            })
+        }
+        await Section.findByIdAndDelete(sectionId);
+        return res.status(200).json({
+            success: true,
+            message: "Section deleted successfully"
+        })
+        
+
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error",
+            error: error.message
+        })
+        
+    }
+}
