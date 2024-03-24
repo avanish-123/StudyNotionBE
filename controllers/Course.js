@@ -1,12 +1,12 @@
 const Course = require("../models/Course");
-const Tags = require("../models/Tags");
+const Category = require("../models/Category");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/uploadFileToCloudinary");
 // create and get all courses
 
 exports.createCourse = async (req, res) => {
     try {
-        const { courseName, courseDescription, whatYouWillLearn, price, tag } = req.body;
+        const { courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
         const thumbnail = req.files.thumbnailImage;
 
         if (
@@ -14,7 +14,7 @@ exports.createCourse = async (req, res) => {
             !courseDescription ||
             !whatYouWillLearn ||
             !price ||
-            !tag 
+            !category 
             || !thumbnail
         ) {
             return res.status(400).json({
@@ -26,12 +26,12 @@ exports.createCourse = async (req, res) => {
         //get instructor id from middleware
         const instructorUserId = req.user.id;
 
-        //check tag is valid or not
-        const tagDetails = await Tags.findById(tag);
-        if (!tagDetails) {
+        //check category is valid or not
+        const categoryDetails = await Category.findById(category);
+        if (!categoryDetails) {
             return res.status(400).json({
                 success: false,
-                message: "Please enter the correct tag",
+                message: "Please enter the correct category",
             });
         }
 
@@ -47,7 +47,7 @@ exports.createCourse = async (req, res) => {
             whatYouWillLearn,
             instructor: instructorUserId,
             price,
-            tag: tag,
+            category: category,
             thumbnail: uploadThumnail.secure_url,
         });
         //update the courses of the instructor id so that instructor have access of course
@@ -57,9 +57,9 @@ exports.createCourse = async (req, res) => {
             { new: true }
         );
 
-        //update the tag - just add the course id into tag
-        await Tags.findByIdAndUpdate(
-            tag,
+        //update the category - just add the course id into category
+        await Category.findByIdAndUpdate(
+            category,
             { $push: { course: createNewCourse._id } },
             { new: true }
         );
