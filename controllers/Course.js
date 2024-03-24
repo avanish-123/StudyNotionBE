@@ -6,7 +6,7 @@ const { uploadImageToCloudinary } = require("../utils/uploadFileToCloudinary");
 
 exports.createCourse = async (req, res) => {
     try {
-        const { courseName, courseDescription, whatYouWillLearn, price, category } = req.body;
+        const { courseName, courseDescription, whatYouWillLearn, price, category, tags } = req.body;
         const thumbnail = req.files.thumbnailImage;
 
         if (
@@ -47,6 +47,7 @@ exports.createCourse = async (req, res) => {
             whatYouWillLearn,
             instructor: instructorUserId,
             price,
+            tags,
             category: category,
             thumbnail: uploadThumnail.secure_url,
         });
