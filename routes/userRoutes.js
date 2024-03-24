@@ -5,6 +5,7 @@ const { isAuth, isAdmin, isInstructor } = require('../middlewares/auth');
 const { resetPasswordtoken, resetPassword } = require('../controllers/ResetPassword');
 const { createCategory, getAllCategory } = require('../controllers/Category');
 const { createCourse } = require('../controllers/Course');
+const { createSection, updateSection } = require('../controllers/Section');
 const router = express.Router();
 
 router.post('/sendotp', sendOTP);
@@ -16,5 +17,7 @@ router.post('/resetpassword', resetPassword)
 router.post('/createcategories', isAuth, isAdmin, createCategory)
 router.get('/getallcategories', isAuth, getAllCategory)
 router.post('/createcourse',isAuth,isInstructor, createCourse)
+router.post('/createsection', isAuth, isInstructor, createSection)
+router.post('/updatesection', isAuth, isInstructor, updateSection)
 
 module.exports = router
