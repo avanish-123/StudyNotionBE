@@ -55,3 +55,31 @@ exports.deleteAccount = async (req,res)=>{
         
     }
 }
+
+
+//get user's all details
+exports.getUserAllDetails = async(req,res)=>{
+    try {
+        const {userId} = req.body;
+        //check user present or not in databse with about id
+        const checkUser = await User.findById(userId).populate('additionalDetails').populate('courses').exec();
+        if(!checkUser){
+            return res.status(400).json({
+                success: false,
+                message:"No account found with this user id"
+            })
+        }
+        return res.status(200).json({
+            success: true,
+            message:"User details fetched successfully",
+            data: checkUser
+        })
+    } catch (error) {
+        return res.status(500).json({
+            success: false,
+            message:"Internal server error",
+            error: error.message
+        })
+        
+    }
+}

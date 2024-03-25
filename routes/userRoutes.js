@@ -7,7 +7,7 @@ const { createCategory, getAllCategory } = require('../controllers/Category');
 const { createCourse } = require('../controllers/Course');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
-const { updateProfile, deleteAccount } = require('../controllers/Profile');
+const { updateProfile, deleteAccount, getUserAllDetails } = require('../controllers/Profile');
 const router = express.Router();
 
 router.post('/sendotp', sendOTP);
@@ -27,5 +27,6 @@ router.post('/updatesubsection', isAuth, isInstructor, updateSubSection)
 router.post('/deletesubsection', isAuth, isInstructor, deleteSubSection)
 router.post('/updateprofile', isAuth, updateProfile)
 router.post('/deleteaccount', isAuth, deleteAccount)
+router.get('/getuserdetails', isAuth, isAdmin, getUserAllDetails)
 
 module.exports = router
