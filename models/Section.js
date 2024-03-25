@@ -8,6 +8,5 @@ const sectionSchema = new mongoose.Schema({
         ref: "SubSection",
         required: true,
     }]
-
 })
 module.exports = mongoose.model('Section', sectionSchema);
