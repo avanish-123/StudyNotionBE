@@ -1,9 +1,11 @@
 const SubSection = require("../models/SubSection");
 const Section = require("../models/Section");
+const {uploadImageToCloudinary} = require('../utils/uploadFileToCloudinary')
 exports.createSubSection = async(req,res)=>{
     try {
-        const {title, timeDuration, description, videoUrl, sectionId} = req.body;
-        if(!title || !timeDuration || !description || !videoUrl || !sectionId ){
+        const {title, timeDuration, description, sectionId} = req.body;
+        const videoFile = req.files.videoLec;
+        if(!title || !timeDuration || !description || !sectionId || !videoFile ){
             return res.status(400).json({
                 success: false,
                 message: "please fill all the required fields"
@@ -17,8 +19,10 @@ exports.createSubSection = async(req,res)=>{
                 message: "no section is associated with this section id"
             })
         }
+        //upload video on cloudinary
+        const videoUrl = await uploadImageToCloudinary(videoFile, "StudyNotion")
         // save in SubSection collection
-        const createdSubSection = await SubSection.create({title, timeDuration, videoUrl, description});
+        const createdSubSection = await SubSection.create({title, timeDuration, videoUrl: videoUrl.secure_url, description});
 
         //push the id into section collection
         await Section.findByIdAndUpdate(sectionId, {$push:{subSection:createdSubSection._id}},{new:true});
@@ -90,5 +94,4 @@ exports.deleteSubSection = async(req,res) => {
         })
         
     }
-
 }
