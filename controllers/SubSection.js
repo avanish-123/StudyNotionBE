@@ -40,9 +40,12 @@ exports.createSubSection = async(req,res)=>{
     }
 }
 
+
+//todo: some refactoring required
 exports.updateSubSection = async (req,res) => {
     try {
-        const {title, description, timeDuration, videoUrl, subSectionId} = req.body;
+        const {title, description, timeDuration, subSectionId} = req.body;
+        const videoFile = req.files.videoLec
         //check subsection present or not in database with given id
         const checkSubSection = await SubSection.findById(subSectionId);
         if(!checkSubSection){
@@ -51,7 +54,8 @@ exports.updateSubSection = async (req,res) => {
                 message: "No sub section associated with the given id"
             })
         }
-        await SubSection.findByIdAndUpdate(subSectionId,{title, description, timeDuration, videoUrl})
+        let videoUrl = await uploadImageToCloudinary(videoFile, "StudyNotion")
+        await SubSection.findByIdAndUpdate(subSectionId,{title, description, timeDuration, videoUrl: videoUrl.secure_url})
         return res.status(200).json({
             success: true,
             message: "Seb Section Updated successfully"
