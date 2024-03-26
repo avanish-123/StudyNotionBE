@@ -4,6 +4,7 @@ const User = require("../models/User");
 const bcrypt = require('bcrypt')
 const { mailSender } = require('../utils/mailSender');
 const ResetPasswordToken = require('../models/ResetPasswordToken');
+const { passwordUpdated } = require('../mail/templates/passwordUpdate');
 
 exports.resetPasswordtoken = async(req,res)=>{
     try {
@@ -64,8 +65,8 @@ exports.resetPassword = async(req,res)=>{
         //if token exist
         const hashedPassword = await bcrypt.hash(newPassword,10)
         let email = data.email;
-        await User.findOneAndUpdate({email}, {password: hashedPassword})
-        await mailSender(email, 'Password Changed', 'Dear User your password changed successfully')
+        const user = await User.findOneAndUpdate({email}, {password: hashedPassword})
+        await mailSender(email, 'Password Changed', passwordUpdated(email, `${user.firstName} ${user.lastName}`));
         await ResetPasswordToken.deleteMany({email})
         return res.status(200).json({
             success: true,
