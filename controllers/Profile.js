@@ -86,7 +86,7 @@ exports.deleteAccount = async (req, res) => {
 //get user's all details
 exports.getUserAllDetails = async (req, res) => {
   try {
-    const { userId } = req.body;
+    const userId = req.user.id;
     //check user present or not in databse with about id
     const checkUser = await User.findById(userId)
       .populate("additionalDetails")
