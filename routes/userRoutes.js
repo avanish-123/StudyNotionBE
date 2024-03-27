@@ -2,7 +2,7 @@ const express = require('express');
 const { sendOTP, signUp, login, changePassword } = require('../controllers/Auth');
 const { isAuth, isAdmin, isInstructor } = require('../middlewares/auth');
 const { resetPasswordtoken, resetPassword } = require('../controllers/ResetPassword');
-const { createCategory, getAllCategory } = require('../controllers/Category');
+const { createCategory, getAllCategory, categoryPageDetails } = require('../controllers/Category');
 const { createCourse, getCourseDetails } = require('../controllers/Course');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
@@ -34,5 +34,6 @@ router.post('/deleteratingandreview', isAuth, deleteRatingAndReview)
 router.post('/updateratingandreview', isAuth, updateRatingAndReview)
 router.get('/getaveragerating', getAverageRating)
 router.get('/getallratingandreview', getAllRatingAndReview)
+router.get('/categorypagedetail',categoryPageDetails)
 
 module.exports = router
