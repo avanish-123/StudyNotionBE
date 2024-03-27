@@ -1,8 +1,10 @@
 const express = require("express");
 const { dbConnect } = require("./config/database");
 const router = require("./routes/userRoutes");
+const cors = require("cors");
 const { connectToCloudinary } = require("./config/connectToCloudinary");
 const fileUpload = require("express-fileupload");
+const cookieParser = require("cookie-parser");
 const app = express();
 require("dotenv").config();
 const Port = process.env.PORT || 5000;
@@ -13,12 +15,18 @@ app.use(
   })
 );
 app.use(
-      fileUpload({
-            useTempFiles: true,
-            tempFileDir: "/tmp/",
-          })
-        );
-        
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
+app.use(cookieParser())
+app.use(
+  cors({
+    origin: "http://localhost:5000",
+    credentials: true
+  })
+);
 app.use("/api/v1", router);
 dbConnect(process.env.MONGODB_URL);
 connectToCloudinary(

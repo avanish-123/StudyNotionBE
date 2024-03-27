@@ -6,7 +6,7 @@ const { createCategory, getAllCategory, categoryPageDetails } = require('../cont
 const { createCourse, getCourseDetails } = require('../controllers/Course');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
-const { updateProfile, deleteAccount, getUserAllDetails } = require('../controllers/Profile');
+const { updateProfile, deleteAccount, getUserAllDetails, updateProfilePicture } = require('../controllers/Profile');
 const { rateAndReviewCourse, deleteRatingAndReview, updateRatingAndReview, getAverageRating, getAllRatingAndReview } = require('../controllers/RatingAndReview');
 const router = express.Router();
 
@@ -27,6 +27,7 @@ router.post('/createsubsection', isAuth, isInstructor, createSubSection);
 router.post('/updatesubsection', isAuth, isInstructor, updateSubSection)
 router.post('/deletesubsection', isAuth, isInstructor, deleteSubSection)
 router.post('/updateprofile', isAuth, updateProfile)
+router.post('/updateprofilepicture', isAuth, updateProfilePicture)
 router.post('/deleteaccount', isAuth, deleteAccount)
 router.get('/getuserdetails', isAuth, isAdmin, getUserAllDetails)
 router.post('/ratingAndReview', isAuth, rateAndReviewCourse)

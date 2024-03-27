@@ -46,5 +46,21 @@ const UserSchema = new mongoose.Schema({
             ref: 'CourseProgress'
         }
     ],
+    active:{
+        type: Boolean,
+        default: true
+    },
+    approved:{
+        type: Boolean,
+        default: true
+    },
+    createdAt:{
+        type: Date,
+        default: Date.now()
+    },
+    updatedAt:{
+        type: Date,
+        default: Date.now()
+    }
 })
 module.exports = mongoose.model('User', UserSchema)
