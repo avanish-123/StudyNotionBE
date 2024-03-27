@@ -1,5 +1,4 @@
 const express = require('express');
-// const upload =  require('multer')();
 const { sendOTP, signUp, login, changePassword } = require('../controllers/Auth');
 const { isAuth, isAdmin, isInstructor } = require('../middlewares/auth');
 const { resetPasswordtoken, resetPassword } = require('../controllers/ResetPassword');
@@ -8,8 +7,7 @@ const { createCourse, getCourseDetails } = require('../controllers/Course');
 const { createSection, updateSection, deleteSection } = require('../controllers/Section');
 const { createSubSection, updateSubSection, deleteSubSection } = require('../controllers/SubSection');
 const { updateProfile, deleteAccount, getUserAllDetails } = require('../controllers/Profile');
-const RatingAndReviews = require('../models/RatingAndReviews');
-const { rateAndReviewCourse } = require('../controllers/RatingAndReview');
+const { rateAndReviewCourse, deleteRatingAndReview, updateRatingAndReview, getAverageRating, getAllRatingAndReview } = require('../controllers/RatingAndReview');
 const router = express.Router();
 
 router.post('/sendotp', sendOTP);
@@ -32,5 +30,9 @@ router.post('/updateprofile', isAuth, updateProfile)
 router.post('/deleteaccount', isAuth, deleteAccount)
 router.get('/getuserdetails', isAuth, isAdmin, getUserAllDetails)
 router.post('/ratingAndReview', isAuth, rateAndReviewCourse)
+router.post('/deleteratingandreview', isAuth, deleteRatingAndReview)
+router.post('/updateratingandreview', isAuth, updateRatingAndReview)
+router.get('/getaveragerating', getAverageRating)
+router.get('/getallratingandreview', getAllRatingAndReview)
 
 module.exports = router
