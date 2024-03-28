@@ -53,11 +53,11 @@ exports.updateSection = async(req,res)=>{
             })
         }
         //check if any course associated with the given id or not
-        const checkCourse = await Section.findById(sectionId);
-        if(!checkCourse){
+        const checkSection = await Section.findById(sectionId);
+        if(!checkSection){
             return res.status(400).json({
                 success: false,
-                message: "No course is associated with the given course ID"
+                message: "No section is associated with the given section ID"
             })
         }
         //if id present
@@ -91,10 +91,11 @@ exports.deleteSection = async(req,res)=>{
         }
         //check if section present or not with given section id
         const checkSection = await Section.findById(sectionId)
-        if(!checkSection){
+        const checkCourse = await Course.findById(courseId)
+        if(!checkSection || !checkCourse){
             return res.status(400).json({
                 success: false,
-                message: "No section associated with this section id"
+                message: "No section or course associated with given ids"
             })
         }
         await Section.findByIdAndDelete(sectionId);
