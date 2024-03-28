@@ -165,6 +165,8 @@ exports.login = async(req,res) => {
       })
     }
     //if password matched with hashed password
+    //update lastLogin
+    await User.findOneAndUpdate({email: email}, {lastLogin: Date.now()})
     //create token
     const payload = {
       email: checkUser.email,
