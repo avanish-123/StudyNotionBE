@@ -17,7 +17,7 @@ router.post('/changepassword', isAuth,changePassword);
 router.post('/resetpasswordtoken', resetPasswordtoken);
 router.post('/resetpassword', resetPassword);
 router.post('/createcategories', isAuth, isAdmin, createCategory);
-router.get('/getallcategories', isAuth, getAllCategory);
+router.get('/getallcategories', getAllCategory);
 router.post('/createcourse',isAuth,isInstructor, createCourse);
 router.get('/getcoursedetails',isAuth, getCourseDetails)
 router.post('/createsection', isAuth, isInstructor, createSection);
