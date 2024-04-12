@@ -45,7 +45,8 @@ exports.resetPasswordtoken = async(req,res)=>{
 
 exports.resetPassword = async(req,res)=>{
     try {
-        const {newPassword, confirmNewPassword, token} = req.body;
+        const {newPassword, confirmNewPassword} = req.body;
+        const {token} = req.query;
         //check if both fields doesn't match
         if(newPassword !== confirmNewPassword){
             return res.status(401).json({
@@ -59,7 +60,7 @@ exports.resetPassword = async(req,res)=>{
         if(!data){
             return res.status(401).json({
                 success: false,
-                message: 'Link is expired'
+                message: 'Token is expired'
             }) 
         }
         //if token exist
