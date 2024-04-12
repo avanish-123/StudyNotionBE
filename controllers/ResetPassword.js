@@ -21,11 +21,11 @@ exports.resetPasswordtoken = async(req,res)=>{
         //generate token 
         const token = crypto.randomBytes(10).toString('hex');
         // using 3000 port number for frontend 
-        const url = `http:localhost:3000/update-password/token=${token}`;
+        const url = `http:localhost:3000/update-password/${token}`;
         //save in database
         await ResetPasswordToken.create({email, token});
         //send email to user
-        await mailSender(email, 'Password reset', `reset password url <a href="${url}">Link</a><br/> only valid for 5 minutes`);
+        await mailSender(email, 'Password reset', `reset password url <a target="_blank" target href="${url}">Link</a><br/> only valid for 5 minutes`);
         //return response
         return res.status(200).json({
             success: true,
